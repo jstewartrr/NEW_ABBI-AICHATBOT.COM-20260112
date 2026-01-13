@@ -1,0 +1,43 @@
+FROM node:20-alpine AS builder
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+COPY client/package*.json ./client/
+COPY api/package*.json ./api/
+
+# Install dependencies
+RUN npm ci --legacy-peer-deps
+
+# Copy source code
+COPY . .
+
+# Build client
+WORKDIR /app/client
+RUN npm run build
+
+# Production image
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install production dependencies
+COPY package*.json ./
+COPY api/package*.json ./api/
+RUN npm ci --production --legacy-peer-deps
+
+# Copy built assets and source
+COPY --from=builder /app/client/dist ./client/dist
+COPY --from=builder /app/api ./api
+COPY --from=builder /app/config ./config
+COPY librechat.yaml ./librechat.yaml
+
+# Set environment
+ENV NODE_ENV=production
+ENV HOST=0.0.0.0
+ENV PORT=3080
+
+EXPOSE 3080
+
+CMD ["node", "api/server/index.js"]
