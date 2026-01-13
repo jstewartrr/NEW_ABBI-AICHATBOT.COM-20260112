@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Blocks, MCPIcon, AttachmentIcon } from '@librechat/client';
-import { Database, Bookmark, Settings2, ArrowRightToLine, MessageSquareQuote } from 'lucide-react';
+import { Database, Bookmark, Settings2, ArrowRightToLine, MessageSquareQuote, BookText } from 'lucide-react';
 import {
   Permissions,
   EModelEndpoint,
@@ -11,6 +11,7 @@ import {
 } from 'librechat-data-provider';
 import type { TInterfaceConfig, TEndpointsConfig } from 'librechat-data-provider';
 import MCPBuilderPanel from '~/components/SidePanel/MCPBuilder/MCPBuilderPanel';
+import { NotebookLMPanel } from '~/components/SidePanel/NotebookLM';
 import type { NavLink } from '~/common';
 import AgentPanelSwitch from '~/components/SidePanel/Agents/AgentPanelSwitch';
 import BookmarkPanel from '~/components/SidePanel/Bookmarks/BookmarkPanel';
@@ -158,6 +159,15 @@ export default function useSideNavLinks({
         Component: BookmarkPanel,
       });
     }
+
+    // NotebookLM Panel (always available)
+    links.push({
+      title: 'com_ui_notebooklm_panel',
+      label: '',
+      icon: BookText,
+      id: 'notebooklm',
+      Component: NotebookLMPanel,
+    });
 
     if (
       (hasAccessToUseMCPSettings && availableMCPServers && availableMCPServers.length > 0) ||

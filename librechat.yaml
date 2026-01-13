@@ -11,6 +11,7 @@ cache: true
 
 interface:
   customName: "ABBI Chat"
+  appTitle: "ABBI"
   privacyPolicy:
     externalUrl: "https://abbi-ai.com/privacy"
   termsOfService:
@@ -88,6 +89,13 @@ modelSpecs:
         model: "claude-3-opus-20240229"
         temperature: 0.7
         greeting: "Your Grace, how may I assist you today?"
+        mcpServers:
+          - "CV SM Gateway V3 20260105"
+          - "CV SM Snowflake 20260105"
+          - "CV SM Azure CLI 20260105"
+          - "Vertex AI - Image Generation"
+          - "Slide Transform - Image Tools"
+          - "NotebookLM"
         promptPrefix: |
           You are Abbi (Adaptive Business Brain Intelligence), an intelligent AI assistant.
           Address the user as "Your Grace" - this is their preferred title.
@@ -190,6 +198,13 @@ mcpServers:
     type: streamable-http
     url: "https://cv-sm-cloudflare-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
     timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  NotebookLM:
+    type: streamable-http
+    url: "https://notebooklm-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 90000
     initTimeout: 30000
     serverInstructions: true
 

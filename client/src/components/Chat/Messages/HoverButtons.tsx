@@ -1,8 +1,11 @@
-import React, { useState, useMemo, memo } from 'react';
+import React, { useState, useMemo, memo, useCallback } from 'react';
 import { useRecoilState } from 'recoil';
 import type { TConversation, TMessage, TFeedback } from 'librechat-data-provider';
+import { ContentTypes } from 'librechat-data-provider';
 import { EditIcon, Clipboard, CheckMark, ContinueIcon, RegenerateIcon } from '@librechat/client';
+import { BookText } from 'lucide-react';
 import { useGenerationsByLatest, useLocalize } from '~/hooks';
+import { useNotebookLM, type NotebookLMSource } from '~/Providers/NotebookLMContext';
 import { Fork } from '~/components/Conversations';
 import MessageAudio from './MessageAudio';
 import Feedback from './Feedback';
@@ -69,6 +72,33 @@ const extractMessageContent = (message: TMessage): string => {
   return message.text || '';
 };
 
+const extractMessageText = (message: TMessage): string => {
+  if (message.text) {
+    return message.text;
+  }
+
+  if (message.content) {
+    if (typeof message.content === 'string') {
+      return message.content;
+    }
+
+    if (Array.isArray(message.content)) {
+      return message.content
+        .filter((part) => part?.type === ContentTypes.TEXT)
+        .map((part) => {
+          if (typeof part === 'string') {
+            return part;
+          }
+          const text = typeof part.text === 'string' ? part.text : part.text?.value;
+          return text || '';
+        })
+        .join('\n');
+    }
+  }
+
+  return '';
+};
+
 const HoverButton = memo(
   ({
     id,
@@ -125,7 +155,9 @@ const HoverButtons = ({
 }: THoverButtons) => {
   const localize = useLocalize();
   const [isCopied, setIsCopied] = useState(false);
+  const [isSentToNotebookLM, setIsSentToNotebookLM] = useState(false);
   const [TextToSpeech] = useRecoilState<boolean>(store.textToSpeech);
+  const { setIsOpen, setSourceData } = useNotebookLM();
 
   const endpoint = useMemo(() => {
     if (!conversation) {
@@ -184,6 +216,35 @@ const HoverButtons = ({
 
   const handleCopy = () => copyToClipboard(setIsCopied);
 
+  const handleSendToNotebookLM = useCallback(() => {
+    setIsSentToNotebookLM(true);
+
+    // Package message content + attachments
+    const sourceData: NotebookLMSource = {
+      type: 'message',
+      messageId: message.messageId,
+      conversationId: message.conversationId || conversation?.conversationId || '',
+      content: {
+        text: extractMessageText(message),
+        attachments: message.attachments || [],
+        metadata: {
+          sender: message.sender,
+          model: message.model,
+          endpoint: message.endpoint,
+          createdAt: message.createdAt,
+        },
+      },
+      timestamp: new Date(),
+    };
+
+    // Set context and open panel
+    setSourceData(sourceData);
+    setIsOpen(true);
+
+    // Visual feedback
+    setTimeout(() => setIsSentToNotebookLM(false), 2000);
+  }, [message, conversation, setSourceData, setIsOpen]);
+
   return (
     <div className="group visible flex justify-center gap-0.5 self-end focus-within:outline-none lg:justify-start">
       {/* Text to Speech */}
@@ -217,6 +278,24 @@ const HoverButtons = ({
           'ml-0 flex items-center gap-1.5 text-xs',
           isSubmitting && isCreatedByUser ? 'md:opacity-0 md:group-hover:opacity-100' : '',
         )}
+      />
+
+      {/* NotebookLM Button */}
+      <HoverButton
+        onClick={handleSendToNotebookLM}
+        title={
+          isSentToNotebookLM
+            ? localize('com_ui_sent_to_notebooklm')
+            : localize('com_ui_send_to_notebooklm')
+        }
+        icon={
+          isSentToNotebookLM ? (
+            <CheckMark className="h-[18px] w-[18px]" />
+          ) : (
+            <BookText size={19} />
+          )
+        }
+        isLast={isLast}
       />
 
       {/* Edit Button */}
