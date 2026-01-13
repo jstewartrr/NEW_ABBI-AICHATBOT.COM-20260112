@@ -4,11 +4,13 @@ import {
   ContentTypes,
   ToolCallTypes,
   imageGenTools,
+  isMCPImageGenTool,
   isImageVisionTool,
 } from 'librechat-data-provider';
 import { memo } from 'react';
 import type { TMessageContentParts, TAttachment } from 'librechat-data-provider';
 import { OpenAIImageGen, EmptyText, Reasoning, ExecuteCode, AgentUpdate, Text } from './Parts';
+import { MCPImageGen } from './Parts/MCPImageGen';
 import { ErrorMessage } from './MessageContent';
 import RetrievalCall from './RetrievalCall';
 import AgentHandoff from './AgentHandoff';
@@ -164,6 +166,21 @@ const Part = memo(
       ) {
         return (
           <RetrievalCall initialProgress={toolCall.progress ?? 0.1} isSubmitting={isSubmitting} />
+        );
+      } else if (
+        toolCall.type === ToolCallTypes.FUNCTION &&
+        ToolCallTypes.FUNCTION in toolCall &&
+        isMCPImageGenTool(toolCall.function.name)
+      ) {
+        return (
+          <MCPImageGen
+            initialProgress={toolCall.progress ?? 0.1}
+            isSubmitting={isSubmitting}
+            toolName={toolCall.function.name}
+            args={toolCall.function.arguments as string}
+            output={toolCall.function.output}
+            attachments={attachments}
+          />
         );
       } else if (
         toolCall.type === ToolCallTypes.FUNCTION &&

@@ -1313,7 +1313,42 @@ export const imageGenTools = new Set([
   'stable-diffusion',
   'flux',
   'gemini_image_gen',
+  // MCP image generation tools
+  'imagen',
+  'imagen_generate',
+  'generate_image',
+  'create_image',
+  'nano_banana',
+  'image_generation',
+  'draw_image',
 ]);
+
+/**
+ * Check if an MCP tool is for image generation
+ * @param toolName - Full tool name including MCP delimiter (e.g., "imagen_mcp_Vertex AI")
+ * @returns true if the tool is an MCP image generation tool
+ */
+export function isMCPImageGenTool(toolName: string): boolean {
+  if (!toolName.includes(Constants.mcp_delimiter)) {
+    return false;
+  }
+
+  const [funcName] = toolName.split(Constants.mcp_delimiter);
+  const lowerFuncName = funcName.toLowerCase();
+
+  // Check against known image generation tool names
+  return (
+    imageGenTools.has(funcName) ||
+    lowerFuncName.includes('imagen') ||
+    lowerFuncName.includes('nano_banana') ||
+    lowerFuncName.includes('image_gen') ||
+    lowerFuncName.includes('generate_image') ||
+    lowerFuncName.includes('create_image') ||
+    lowerFuncName.includes('draw_image') ||
+    (lowerFuncName.includes('generate') && lowerFuncName.includes('image')) ||
+    (lowerFuncName.includes('create') && lowerFuncName.includes('image'))
+  );
+}
 
 /**
  * Enum for collections using infinite queries
