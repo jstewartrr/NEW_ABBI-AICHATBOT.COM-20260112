@@ -1,0 +1,364 @@
+# HiveMindChat Configuration Backup
+# Date: January 12, 2026
+# Site: https://hivemindchat.abbi-aichatbot.com
+# Version: v0169_20260112
+# Azure Container: librechat-app (Revision 0000178)
+# GitHub Repo: https://github.com/jstewartrr/abbi-20260103-chatbot-legacy
+# Vercel Project: cv-sm-hivemindchat-abbi-aichatbot-com-20260112
+
+version: 1.3.1
+cache: true
+
+interface:
+  customName: "ABBI Chat"
+  privacyPolicy:
+    externalUrl: "https://abbi-ai.com/privacy"
+  termsOfService:
+    externalUrl: "https://abbi-ai.com/terms"
+  endpointsMenu: true
+  modelSelect: true
+  parameters: true
+  presets: true
+  sidePanel: true
+  agents: true
+  mcpServers:
+    use: true
+    create: true
+    share: true
+
+speech:
+  tts:
+    elevenlabs:
+      apiKey: "${ELEVENLABS_API_KEY}"
+      model: "eleven_turbo_v2_5"
+      voices:
+        - "aRlmTYIQo6Tlg5SlulGC"  # Charlotte - Australian, Middle-aged, Confident
+      voice_settings:
+        stability: 0.5
+        similarity_boost: 0.75
+        style: 0.0
+        use_speaker_boost: true
+  stt:
+    openai:
+      apiKey: "${OPENAI_API_KEY}"
+      model: "whisper-1"
+
+memory:
+  disabled: false
+  validKeys:
+    - "user_preferences"
+    - "portfolio_context"
+    - "project_status"
+    - "learned_facts"
+    - "action_items"
+    - "agent_handoffs"
+    - "active_session"
+  tokenLimit: 4000
+  charLimit: 15000
+  personalize: true
+  messageWindowSize: 10
+  agent:
+    provider: "anthropic"
+    model: "claude-3-5-haiku-20241022"
+    instructions: |
+      Store memory using only the specified validKeys.
+      For user_preferences: communication style, preferred formats, workflow preferences.
+      For portfolio_context: active companies, deals, projects mentioned.
+      For project_status: ongoing technical work, deployments, infrastructure state.
+      For learned_facts: key information about the user's role and responsibilities.
+      For action_items: tasks mentioned or committed to.
+      For agent_handoffs: context for other AI models/sessions.
+      For active_session: current session ID and status.
+      Delete outdated or corrected information promptly.
+      Focus on explicitly stated facts, not inferences.
+    model_parameters:
+      temperature: 0.2
+      max_tokens: 2000
+
+modelSpecs:
+  enforce: false
+  prioritize: true
+  list:
+    - name: "abbi-assistant"
+      label: "Abbi - AI Assistant"
+      default: true
+      description: "Intelligent AI assistant with Sovereign Mind integration and MCP tools access"
+      preset:
+        endpoint: "anthropic"
+        model: "claude-3-opus-20240229"
+        temperature: 0.7
+        greeting: "Your Grace, how may I assist you today?"
+        promptPrefix: |
+          You are Abbi (Adaptive Business Brain Intelligence), an intelligent AI assistant.
+          Address the user as "Your Grace" - this is their preferred title.
+          Be direct, concise, and executive-level in communication.
+          Format dates as "Friday, January 10th".
+          Take action rather than asking for permission on clearly beneficial tasks.
+          Keep responses focused and actionable.
+
+          VOICE MODE - CRITICAL INSTRUCTIONS:
+          Your responses will be read aloud using text-to-speech. Follow these rules strictly:
+          1. Speak directly to the user in natural conversation - NEVER include meta-commentary
+          2. Do NOT use markdown formatting (no **bold**, no `code`, no lists with bullets/numbers)
+          3. For technical content: Describe it naturally instead of showing code
+             - Instead of showing code: "I've updated the configuration with three new settings"
+             - Instead of URLs: "I've deployed this to your production site"
+          4. Use natural speech patterns:
+             - "Your Grace, I've checked your calendar. You have three meetings today."
+             - NOT: "**Calendar for Today:** 1. Meeting at 9am 2. Call at 2pm"
+          5. Keep it conversational and flowing like human speech
+          6. If you need to mention technical details, speak them naturally without special formatting
+
+          You have access to MCP tools for: M365 (email/calendar), Asana (tasks), GitHub, Dropbox,
+          DealCloud, Make automation, ElevenLabs, Snowflake queries, Azure CLI, Image Generation
+          (Imagen 3, Nano Banana diagrams, vectorization, background removal), and more.
+
+    - name: "quick-assistant"
+      label: "Quick Chat"
+      description: "Fast responses for simple questions"
+      preset:
+        endpoint: "anthropic"
+        model: "claude-3-5-haiku-20241022"
+        temperature: 0.5
+        promptPrefix: |
+          You are a helpful AI assistant. Be concise and direct.
+          Address the user as "Your Grace" if they prefer formal communication.
+
+    - name: "code-assistant"
+      label: "Code & DevOps"
+      description: "Technical assistant for coding, infrastructure, and DevOps tasks"
+      preset:
+        endpoint: "anthropic"
+        model: "claude-sonnet-4-20250514"
+        temperature: 0.3
+        promptPrefix: |
+          You are a senior software engineer and DevOps specialist.
+          Address the user as "Your Grace".
+          Focus on clean, maintainable code and infrastructure best practices.
+
+mcpServers:
+  "CV SM Gateway V3 20260105":
+    type: sse
+    url: "https://cv-sm-gateway-v3.lemoncoast-87756bcf.eastus.azurecontainerapps.io/sse"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "CV SM Snowflake 20260105":
+    type: streamable-http
+    url: "https://cv-sm-snowflake-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "CV SM Azure CLI 20260105":
+    type: streamable-http
+    url: "https://cv-sm-azure-cli-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "SM MCP Gateway West":
+    type: streamable-http
+    url: "https://sm-mcp-gateway-west.nicecliff-a1c1a3b6.westus2.azurecontainerapps.io/mcp"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "CV SM Gateway Backup 20260105":
+    type: streamable-http
+    url: "https://cv-sm-gateway-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "Vertex AI - Image Generation":
+    type: streamable-http
+    url: "https://vertex-ai-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 90000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "Slide Transform - Image Tools":
+    type: streamable-http
+    url: "https://slide-transform-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 90000
+    initTimeout: 30000
+    serverInstructions: true
+
+  "CV SM Cloudflare 20260105":
+    type: streamable-http
+    url: "https://cv-sm-cloudflare-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
+    timeout: 60000
+    initTimeout: 30000
+    serverInstructions: true
+
+registration:
+  socialLogins: []
+  allowedDomains:
+    - "middleground.com"
+    - "abbi-ai.com"
+
+rateLimits:
+  fileUploads:
+    ipMax: 100
+    ipWindowInMinutes: 60
+    userMax: 50
+    userWindowInMinutes: 60
+
+endpoints:
+  agents:
+    disableBuilder: false
+    capabilities:
+      - "execute_code"
+      - "file_search"
+      - "web_search"
+      - "artifacts"
+      - "actions"
+      - "context"
+      - "tools"
+      - "chain"
+      - "ocr"
+
+  openAI:
+    streamRate: 25
+    titleModel: "gpt-4o-mini"
+    titleConvo: true
+    titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    models:
+      - "gpt-4o"
+      - "gpt-4o-mini"
+      - "o1"
+      - "o1-mini"
+      - "o3-mini"
+
+  anthropic:
+    streamRate: 25
+    titleModel: "claude-3-5-haiku-20241022"
+    titleConvo: true
+    titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    models:
+      - "claude-3-opus-20240229"
+      - "claude-sonnet-4-20250514"
+      - "claude-3-5-sonnet-20241022"
+      - "claude-3-5-haiku-20241022"
+
+  google:
+    streamRate: 25
+    titleModel: "gemini-1.5-flash"
+    titleConvo: true
+    titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    models:
+      - "gemini-2.0-flash-exp"
+      - "gemini-2.0-flash"
+      - "gemini-1.5-pro"
+      - "gemini-1.5-flash"
+
+  bedrock:
+    streamRate: 35
+    titleModel: "amazon.nova-lite-v1:0"
+    titleConvo: true
+    titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    availableRegions:
+      - "us-east-1"
+    models:
+      - "amazon.nova-pro-v1:0"
+      - "amazon.nova-lite-v1:0"
+      - "amazon.nova-micro-v1:0"
+      - "meta.llama3-2-90b-instruct-v1:0"
+      - "meta.llama3-2-11b-instruct-v1:0"
+      - "mistral.mistral-large-2407-v1:0"
+
+  assistants:
+    disableBuilder: true
+
+  custom:
+    - name: "Grok"
+      apiKey: "${XAI_API_KEY}"
+      baseURL: "https://api.x.ai/v1"
+      models:
+        default:
+          - "grok-3"
+          - "grok-3-fast"
+          - "grok-2-1212"
+        fetch: false
+      titleConvo: true
+      titleModel: "grok-3-fast"
+      titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+      modelDisplayLabel: "Grok (xAI)"
+
+fileConfig:
+  endpoints:
+    openAI:
+      fileLimit: 10
+      fileSizeLimit: 512
+      disabled: false
+    anthropic:
+      fileLimit: 10
+      fileSizeLimit: 100
+      disabled: false
+    bedrock:
+      fileLimit: 10
+      fileSizeLimit: 100
+      disabled: false
+    default:
+      fileLimit: 5
+      fileSizeLimit: 50
+
+# =====================================================
+# INFRASTRUCTURE DETAILS
+# =====================================================
+#
+# Azure Container App: librechat-app
+# Resource Group: SovereignMind-RG
+# Current Revision: librechat-app--0000178
+# Container Image: sovereignmindacr.azurecr.io/librechat-hivemind:v2.0
+# Domain: https://hivemindchat.abbi-aichatbot.com
+#
+# Key Environment Variables:
+# - CONFIG_URL: https://cv-sm-hivemindchat-abbi-aichatbot-c.vercel.app/hivemindchat/v0169_20260112/librechat.yaml
+# - CONFIG_REFRESH: 60 seconds
+# - ANTHROPIC_API_KEY: sk-ant-api03-... (configured)
+# - OPENAI_API_KEY: sk-proj-... (configured)
+# - GOOGLE_SERVICE_KEY: Minified JSON (configured)
+# - AWS_ACCESS_KEY_ID: AKIAWNKN3KVLZOUWZ75H (configured)
+# - ELEVENLABS_API_KEY: sk_0242265749... (configured)
+# - XAI_API_KEY: xai-jhTP0uDet6l0... (configured)
+# - IMAGE_GEN_OAI_API_KEY: Full OpenAI key (configured)
+# - DALLE_API_KEY: Full OpenAI key (configured)
+# - GOOGLE_MODELS: gemini-2.0-flash-exp,gemini-2.0-flash,gemini-1.5-pro,gemini-1.5-flash
+#
+# MCP Servers (8 total):
+# 1. CV SM Gateway V3 - 225+ tools (M365, Asana, GitHub, etc.)
+# 2. CV SM Snowflake - Database queries
+# 3. CV SM Azure CLI - Azure infrastructure management
+# 4. SM MCP Gateway West - Backup gateway
+# 5. CV SM Gateway Backup - Additional backup
+# 6. Vertex AI - Image Generation (Imagen 3)
+# 7. Slide Transform - Image tools (vectorization, background removal)
+# 8. CV SM Cloudflare - DNS, Workers, Pages management
+#
+# AI Models Available:
+# - OpenAI: gpt-4o, gpt-4o-mini, o1, o1-mini, o3-mini
+# - Anthropic: Claude Opus, Sonnet 4, Sonnet 3.5, Haiku
+# - Google: Gemini 2.0 Flash, Gemini 1.5 Pro/Flash
+# - AWS Bedrock: Nova Pro/Lite/Micro, Llama 3.2, Mistral Large
+# - xAI: Grok 3, Grok 3 Fast, Grok 2
+#
+# Voice/TTS Configuration:
+# - Provider: ElevenLabs
+# - Model: eleven_turbo_v2_5
+# - Voice: Charlotte (aRlmTYIQo6Tlg5SlulGC)
+# - Characteristics: Australian, Middle-aged, Confident
+# - STT Provider: OpenAI Whisper-1
+#
+# Recent Fixes:
+# - Fixed image generation (DALL-E API keys)
+# - Added Cloudflare MCP server
+# - Optimized TTS for natural voice output
+# - Enabled memory with personalization
+# - Updated all API keys in container
+# - Fixed Gemini/Vertex AI authentication
+# - Fixed AWS Bedrock IAM credentials
+#
+# =====================================================
