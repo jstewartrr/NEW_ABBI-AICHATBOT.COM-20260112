@@ -93,8 +93,10 @@ modelSpecs:
           - "CV SM Gateway V3 20260105"
           - "CV SM Snowflake 20260105"
           - "CV SM Azure CLI 20260105"
+          - "SM MCP Gateway West"
           - "Vertex AI - Image Generation"
           - "Slide Transform - Image Tools"
+          - "CV SM Cloudflare 20260105"
           - "NotebookLM"
         promptPrefix: |
           You are Abbi (Adaptive Business Brain Intelligence), an intelligent AI assistant.
