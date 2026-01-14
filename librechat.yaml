@@ -150,64 +150,64 @@ mcpServers:
   "CV SM Gateway V3 20260105":
     type: sse
     url: "https://cv-sm-gateway-v3.lemoncoast-87756bcf.eastus.azurecontainerapps.io/sse"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   "CV SM Snowflake 20260105":
     type: streamable-http
     url: "https://cv-sm-snowflake-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   "CV SM Azure CLI 20260105":
     type: streamable-http
     url: "https://cv-sm-azure-cli-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   "SM MCP Gateway West":
     type: streamable-http
     url: "https://sm-mcp-gateway-west.nicecliff-a1c1a3b6.westus2.azurecontainerapps.io/mcp"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   "CV SM Gateway Backup 20260105":
     type: streamable-http
     url: "https://cv-sm-gateway-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   "Vertex AI - Image Generation":
     type: streamable-http
     url: "https://vertex-ai-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 30000
+    timeout: 120000
+    initTimeout: 60000
     serverInstructions: true
 
   "Slide Transform - Image Tools":
     type: streamable-http
     url: "https://slide-transform-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 30000
+    timeout: 120000
+    initTimeout: 60000
     serverInstructions: true
 
   "CV SM Cloudflare 20260105":
     type: streamable-http
     url: "https://cv-sm-cloudflare-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 60000
-    initTimeout: 30000
+    timeout: 90000
+    initTimeout: 60000
     serverInstructions: true
 
   NotebookLM:
     type: streamable-http
     url: "https://notebooklm-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 30000
+    timeout: 120000
+    initTimeout: 60000
     serverInstructions: true
 
 registration:
