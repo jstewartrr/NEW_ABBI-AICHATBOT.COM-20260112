@@ -149,11 +149,12 @@ modelSpecs:
 
 mcpServers:
   "CV SM Gateway V3 20260105":
-    type: sse
-    url: "https://cv-sm-gateway-v3.lemoncoast-87756bcf.eastus.azurecontainerapps.io/sse"
+    type: streamable-http
+    url: "https://cv-sm-gateway-v3.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
     timeout: 90000
     initTimeout: 60000
     serverInstructions: true
+    chatMenu: true
 
   "CV SM Snowflake 20260105":
     type: streamable-http
