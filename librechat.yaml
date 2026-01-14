@@ -91,14 +91,7 @@ modelSpecs:
         temperature: 0.7
         greeting: "Your Grace, how may I assist you today?"
         mcpServers:
-          - "CV SM Gateway V3 20260105"
-          - "CV SM Snowflake 20260105"
-          - "CV SM Azure CLI 20260105"
           - "SM MCP Gateway West"
-          - "Vertex AI - Image Generation"
-          - "Slide Transform - Image Tools"
-          - "CV SM Cloudflare 20260105"
-          - "NotebookLM"
         promptPrefix: |
           You are Abbi (Adaptive Business Brain Intelligence), an intelligent AI assistant.
           Address the user as "Your Grace" - this is their preferred title.
@@ -148,69 +141,13 @@ modelSpecs:
           Focus on clean, maintainable code and infrastructure best practices.
 
 mcpServers:
-  "CV SM Gateway V3 20260105":
-    type: streamable-http
-    url: "https://cv-sm-gateway-v3.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-    chatMenu: true
-
-  "CV SM Snowflake 20260105":
-    type: streamable-http
-    url: "https://cv-sm-snowflake-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-
-  "CV SM Azure CLI 20260105":
-    type: streamable-http
-    url: "https://cv-sm-azure-cli-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-
   "SM MCP Gateway West":
     type: streamable-http
     url: "https://sm-mcp-gateway-west.nicecliff-a1c1a3b6.westus2.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-
-  "CV SM Gateway Backup 20260105":
-    type: streamable-http
-    url: "https://cv-sm-gateway-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-
-  "Vertex AI - Image Generation":
-    type: streamable-http
-    url: "https://vertex-ai-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
     timeout: 120000
     initTimeout: 60000
     serverInstructions: true
-
-  "Slide Transform - Image Tools":
-    type: streamable-http
-    url: "https://slide-transform-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 120000
-    initTimeout: 60000
-    serverInstructions: true
-
-  "CV SM Cloudflare 20260105":
-    type: streamable-http
-    url: "https://cv-sm-cloudflare-20260105.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 90000
-    initTimeout: 60000
-    serverInstructions: true
-
-  NotebookLM:
-    type: streamable-http
-    url: "https://notebooklm-mcp.lemoncoast-87756bcf.eastus.azurecontainerapps.io/mcp"
-    timeout: 120000
-    initTimeout: 60000
-    serverInstructions: true
+    chatMenu: true
 
 registration:
   socialLogins: []
@@ -245,14 +182,7 @@ endpoints:
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
     mcpServers:
-      - "CV SM Gateway V3 20260105"
-      - "CV SM Snowflake 20260105"
-      - "CV SM Azure CLI 20260105"
       - "SM MCP Gateway West"
-      - "Vertex AI - Image Generation"
-      - "Slide Transform - Image Tools"
-      - "CV SM Cloudflare 20260105"
-      - "NotebookLM"
     models:
       - "gpt-4o"
       - "gpt-4o-mini"
@@ -266,14 +196,7 @@ endpoints:
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
     mcpServers:
-      - "CV SM Gateway V3 20260105"
-      - "CV SM Snowflake 20260105"
-      - "CV SM Azure CLI 20260105"
       - "SM MCP Gateway West"
-      - "Vertex AI - Image Generation"
-      - "Slide Transform - Image Tools"
-      - "CV SM Cloudflare 20260105"
-      - "NotebookLM"
     models:
       - "claude-3-opus-20240229"
       - "claude-sonnet-4-20250514"
@@ -286,14 +209,7 @@ endpoints:
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
     mcpServers:
-      - "CV SM Gateway V3 20260105"
-      - "CV SM Snowflake 20260105"
-      - "CV SM Azure CLI 20260105"
       - "SM MCP Gateway West"
-      - "Vertex AI - Image Generation"
-      - "Slide Transform - Image Tools"
-      - "CV SM Cloudflare 20260105"
-      - "NotebookLM"
     models:
       - "gemini-2.0-flash-exp"
       - "gemini-2.0-flash"
@@ -306,14 +222,7 @@ endpoints:
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
     mcpServers:
-      - "CV SM Gateway V3 20260105"
-      - "CV SM Snowflake 20260105"
-      - "CV SM Azure CLI 20260105"
       - "SM MCP Gateway West"
-      - "Vertex AI - Image Generation"
-      - "Slide Transform - Image Tools"
-      - "CV SM Cloudflare 20260105"
-      - "NotebookLM"
     availableRegions:
       - "us-east-1"
     models:
@@ -342,14 +251,7 @@ endpoints:
       titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
       modelDisplayLabel: "Grok (xAI)"
       mcpServers:
-        - "CV SM Gateway V3 20260105"
-        - "CV SM Snowflake 20260105"
-        - "CV SM Azure CLI 20260105"
         - "SM MCP Gateway West"
-        - "Vertex AI - Image Generation"
-        - "Slide Transform - Image Tools"
-        - "CV SM Cloudflare 20260105"
-        - "NotebookLM"
 
 fileConfig:
   endpoints:
