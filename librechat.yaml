@@ -26,6 +26,7 @@ interface:
     use: true
     create: true
     share: true
+    persistInChats: true
 
 speech:
   tts:
@@ -242,6 +243,15 @@ endpoints:
     titleModel: "gpt-4o-mini"
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    mcpServers:
+      - "CV SM Gateway V3 20260105"
+      - "CV SM Snowflake 20260105"
+      - "CV SM Azure CLI 20260105"
+      - "SM MCP Gateway West"
+      - "Vertex AI - Image Generation"
+      - "Slide Transform - Image Tools"
+      - "CV SM Cloudflare 20260105"
+      - "NotebookLM"
     models:
       - "gpt-4o"
       - "gpt-4o-mini"
@@ -254,6 +264,15 @@ endpoints:
     titleModel: "claude-3-5-haiku-20241022"
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    mcpServers:
+      - "CV SM Gateway V3 20260105"
+      - "CV SM Snowflake 20260105"
+      - "CV SM Azure CLI 20260105"
+      - "SM MCP Gateway West"
+      - "Vertex AI - Image Generation"
+      - "Slide Transform - Image Tools"
+      - "CV SM Cloudflare 20260105"
+      - "NotebookLM"
     models:
       - "claude-3-opus-20240229"
       - "claude-sonnet-4-20250514"
@@ -265,6 +284,15 @@ endpoints:
     titleModel: "gemini-1.5-flash"
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    mcpServers:
+      - "CV SM Gateway V3 20260105"
+      - "CV SM Snowflake 20260105"
+      - "CV SM Azure CLI 20260105"
+      - "SM MCP Gateway West"
+      - "Vertex AI - Image Generation"
+      - "Slide Transform - Image Tools"
+      - "CV SM Cloudflare 20260105"
+      - "NotebookLM"
     models:
       - "gemini-2.0-flash-exp"
       - "gemini-2.0-flash"
@@ -276,6 +304,15 @@ endpoints:
     titleModel: "amazon.nova-lite-v1:0"
     titleConvo: true
     titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
+    mcpServers:
+      - "CV SM Gateway V3 20260105"
+      - "CV SM Snowflake 20260105"
+      - "CV SM Azure CLI 20260105"
+      - "SM MCP Gateway West"
+      - "Vertex AI - Image Generation"
+      - "Slide Transform - Image Tools"
+      - "CV SM Cloudflare 20260105"
+      - "NotebookLM"
     availableRegions:
       - "us-east-1"
     models:
@@ -303,6 +340,15 @@ endpoints:
       titleModel: "grok-3-fast"
       titlePrompt: "Generate a short title (max 6 words) in format: [LC-MMDD] Topic."
       modelDisplayLabel: "Grok (xAI)"
+      mcpServers:
+        - "CV SM Gateway V3 20260105"
+        - "CV SM Snowflake 20260105"
+        - "CV SM Azure CLI 20260105"
+        - "SM MCP Gateway West"
+        - "Vertex AI - Image Generation"
+        - "Slide Transform - Image Tools"
+        - "CV SM Cloudflare 20260105"
+        - "NotebookLM"
 
 fileConfig:
   endpoints:
